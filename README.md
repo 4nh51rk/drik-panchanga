@@ -20,6 +20,15 @@ output is the uncertainity in your input values (latitude, longitude).
 
 Also includes computation of sunrise, sunset, moonrise and moonset.
 
+Included in the CLI version (not yet in GUI):
+* Instantaneous planetary positions, including Lagna (Ascendant)
+* Navamsa positions
+* Choghadiya/Gauri panchanga
+* Vimsottari Dasha-Bhukti
+* Rahu Kala, Yamaganda Kala, Gulika Kala
+* Abhijit muhurta and Durmuhurtams
+
+
 By default, the month type is Amavasyanta (new moon to new moon) which
 is most prominent type of calendar used in South India.
 
@@ -44,13 +53,17 @@ In order to just _run_ the GUI (`gui.py`) you also need python-tz and
 wxPython (interface to wxWidgets):
 ```
     apt-get install python-tz
-    apt-get install python-wxgtk2.8
+    apt-get install python-wxgtk3.0
 ```
 
 If you want to _modify_ the GUI (`Gui.wxg`), you must use wxGlade:
 ```
     apt-get install python-wxglade
 ```
+
+Wxglade 0.7.0 is buggy (0.6.8 is ok), try the development version from [here][wxgde].
+
+[wxgde]: https://bitbucket.org/agriggio/wxglade/downloads
 
 How does it look?
 
@@ -129,6 +142,41 @@ accurate databases of planetary data for about 10000 years. Hence, this panchang
 is based on the Swiss Ephemeris. Other databases include those published by NASA's
 JPL (DE405) or the Moshier ephemeris.
 
+#### Śubhāśubha Samaya
+
+Gaurī (Gowri) Panchanga and Choghadiya are south Indian and north Indian names
+respectively, for the same mathematical calculation. Basically, day and night
+duration are each divided into eight parts; the difference between N.Indian and
+S.Indian lies in their names and which part is considered
+auspicious/inauspicious. In the S.Indian variant, Tamilians use
+[different order][kowri] and names compared to Kannadigas/Telugus. This program
+provides the latter only. (This inconsitency alone is enough to let you know
+that such concepts of (in-)auspiciousness are all pseudo-science).
+
+Rāhukāla, Yamagaṇḍakāla, Gulikakāla, Durmuhūrtams and Varjyam are all considered
+inauspicious. Abhijit muhūrta and Amṛtakāla are considered auspicious.
+
+[kowri]: http://tamilastrology.hosuronline.com/KowriPanchangam/
+
+### Uranus and Neptune
+
+These planets were not discovered by Indian astronomers. They are sometimes
+translated as "[Aruṇa graha][ar_hi]" and "[Varuṇa graha][va_hi]" in languages
+like Hindi, Nepali, etc. Problem is that there is another trans-Neptunian
+planet which is also called [Varuna][v20k] in English.
+
+The Positional Astronomy Center [translates][pac] them as `हर्शल` and
+`नेपच्यून`. This is inconsistent in the sense that Uranus was translated after its
+discoverer (William Herschel) where as Neptune was phonetically transcribed from
+English, instead of basing on its discoverer (Johann Galle). Therefore, I've
+"Indianized" their names in a rhyming fashion as **`हर्षल`** (=Uranus) and
+**`गल्ल`** (=Neptune). They also mean "happy" and "cheek/chin" respectively in
+many Indian languages.
+
+[ar_hi]: https://hi.wikipedia.org/wiki/अरुण_(ग्रह)
+[va_hi]: https://hi.wikipedia.org/wiki/वरुण_(ग्रह)
+[pac]: http://www.packolkata.gov.in/download/hindi/Page_020.jpg
+[v20k]: https://en.wikipedia.org/wiki/20000_Varuna
 
 References
 ----------
@@ -141,6 +189,8 @@ These ones are helpful for implementing panchanga software:
 This is _the_ calendar book (though it mostly deals with Surya Siddhanta):
 * Dershowitz and Reingold, _Calendrical Calculations_, 3rd edition, 2008.
   [Online Java applet](http://emr.cs.iit.edu/home/reingold/calendar-book/Calendrica.html).
+
+* Shayamasundara Dasa, [_Vimsottari Year -- 360 or 365 ?_](http://shyamasundaradasa.com/jyotish/resources/articles/pdf_versions/english/360_vs_365.pdf)
 
 #### Similar software ####
 
@@ -183,4 +233,7 @@ GNU Affero GPL version 3 (or later).
 #### TODO ####
 
 * Festivals
-* Rahukaala, Yamaganda kaala
+* Amritakala, varjyam
+* gettext translations
+* Harmonize all functions to use UT aka UT1 instead of UTC or ET
+  (`swe.jdut1_to_utc() <==> swe.utc_to_jd()[1]`, `swe.utc_time_zone()`,  etc.)
